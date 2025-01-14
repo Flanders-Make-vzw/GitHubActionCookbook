@@ -36,5 +36,7 @@ jobs:
         context: .
         platforms: linux/amd64
         push: true
-        tags: 1.0.0
-
+        tags:
+           ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:1.0.0
+        labels:
+           ${{ env.IMAGE_NAME }}:1.0.0
