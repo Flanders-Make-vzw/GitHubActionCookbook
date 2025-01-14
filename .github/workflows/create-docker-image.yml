@@ -3,8 +3,8 @@ name: Create Docker Image for GitHub Action Cookbook
 on: 
   workflow_dispatch:
         
-  repository_dispatch:
-    types: build-ceros-palletizing-api
+  # repository_dispatch:
+  #   types: build-ceros-palletizing-api
 
 env:
   IMAGE_NAME: 'ghcr.io/flanders-make-vzw/github-action-cookbook'
@@ -26,20 +26,6 @@ jobs:
         submodules: 'recursive'
         token : ${{ secrets.PAT_TOKEN }}
       
-    - name:  'Automated Version Bump'
-      id: version-bump
-      uses:  'phips28/gh-action-bump-version@master'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGEJSON_DIR:  'deployment/github-action-cookbook'
-      with:
-        tag-prefix: 'github-action-cookbook-'
-
-    - name: Output Step
-      env:
-          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-      run: echo "new tag $NEW_TAG"
-      
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -56,8 +42,3 @@ jobs:
         context: .
         platforms: linux/amd64
         push: true
-        tags:
-           ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}
-        labels:
-           ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}
-      
