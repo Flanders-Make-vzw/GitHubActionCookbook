@@ -2,9 +2,6 @@ name: Create Docker Image for GitHub Action Cookbook
 
 on: 
   workflow_dispatch:
-        
-  # repository_dispatch:
-  #   types: build-ceros-palletizing-api
 
 env:
   IMAGE_NAME: 'ghcr.io/flanders-make-vzw/github-action-cookbook'
@@ -22,9 +19,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
-        token : ${{ secrets.PAT_TOKEN }}
       
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -42,3 +36,5 @@ jobs:
         context: .
         platforms: linux/amd64
         push: true
+         tags: 1.0.0
+
