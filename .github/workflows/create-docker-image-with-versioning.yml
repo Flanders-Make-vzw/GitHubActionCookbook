@@ -1,4 +1,4 @@
-name: Create Docker Image for GitHub Action Cookbook
+name: Create Docker Image for GitHub Action Cookbook With Automatic Versioning
 
 on: 
   workflow_dispatch:
