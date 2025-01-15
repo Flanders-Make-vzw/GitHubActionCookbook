@@ -1,7 +1,8 @@
+
 services:
 
- django-web:
-   build: .
-   container_name: django-docker
-   ports:
-     - "8000:8000"
+  django-web:
+    image: ghcr.io/flanders-make-vzw/github-action-cookbook:latest
+    container_name: github-action-cookbook
+    ports:
+      - "8000:8000"

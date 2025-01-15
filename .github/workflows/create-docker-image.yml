@@ -12,9 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Needed to increment version number, and tag.
       packages: write
-      deployments: write
 
     steps:
     - name: Checkout code
@@ -37,6 +35,6 @@ jobs:
         platforms: linux/amd64
         push: true
         tags:
-           ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:1.0.0
+          ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:1.0.0
         labels:
-           ${{ env.IMAGE_NAME }}:1.0.0
+          ${{ env.IMAGE_NAME }}:1.0.0
