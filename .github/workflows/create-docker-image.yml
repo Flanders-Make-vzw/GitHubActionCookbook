@@ -2,6 +2,9 @@ name: Create Docker Image for GitHub Action Cookbook
 
 on: 
   workflow_dispatch:
+  
+  # push:
+  #   branches: [ "main" ]
 
 env:
   IMAGE_NAME: 'ghcr.io/flanders-make-vzw/github-action-cookbook'
@@ -12,9 +15,8 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
-
+      packages: write
 
     steps:
     - name: Checkout code
