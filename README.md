@@ -15,13 +15,17 @@ Note the following files and folders in the application:
 * requirements.txt: the file that specified the libraries to be used by the application. It is used in the dockerfile.
 * hello_world_app: the django folder that contains the code for the web application.
 
-If you run this docker image, you 
+If you run this docker image, you should get the following page if you navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/): 
+
+![alt text](image.png)
 
 
-The following steps will be performed:
+
+We will perform the following steps in this tutorial:
 
 * Create a workflow that will package the application in a Docker Image, which will be hosted on ghrc.io.
 * Run the workflow.
+* Find the package.
 * Create a docker-compose.yml file that uses the Docker Image.
 * Logon to ghcr.io
 * Run the docker-compose.yml file.
@@ -79,67 +83,48 @@ jobs:
 
 Replace the following:
 
-* \<Name Of Application> : This is part of the label for the build that will be shown when running the workflow.
-* \<Name Of Application Image>: This should be the name of the Docker Image. It will be shown in GitHub Packages and will be used in the docker-compose.yml.
+* \<Name Of Application> : This is will be shown in the label for the build when running the workflow.
+* \<Name Of Application Image>: This is the name of the Docker Image. It will be shown in GitHub Packages and will be used in the docker-compose.yml.
+
+Commit the file to GitHub so that it is available in your repository.
+
+The workflow contains mostly setup steps. The main processing is done in the docker/build-push-action step. This will build the Docker Image based on the dockerfile. The dockerfile should be in the root directory of the repo, which is specified by the ```context``` setting of this action.
+
+### Run the workflow
+
+* Go to your repository in GitHub
+* Click on the Actions tab
+* In the left sidebar, click the workflow you want to display:
+
+![alt text](image-1.png)
 
 
+Execute the workflow by clicking on ```Run workflow```:
 
+![alt text](image-2.png)
 
+Your workflow should appear in the list (it may take some time before it starts running). By clicking on the workflow, and then build, you should be able to see the different steps which are being executed:
 
-## Create the build yaml file
+![alt text](image-3.png)
 
-In your repository, create a file called `.github\workflows\create-docker-image.yml`.
+You can get more detail of certain step by clicking on it: 
 
-Copy the following code into this file:
+![alt text](image-4.png)
 
+### Find the package
 
-```
-name: Create Docker Image for GitHub Action Cookbook
+When everything has executed succesfully, you should have create a package which contains the Docker Image. To find this package:
 
-on: 
-  workflow_dispatch:
-        
-  # repository_dispatch:
-  #   types: build-ceros-palletizing-api
+* Go back to the `code` tab of the repo.
+* On the right side, you can find the package section:
 
-env:
-  IMAGE_NAME: 'ghcr.io/flanders-make-vzw/github-action-cookbook'
+![alt text](image-5.png)
 
-jobs:
+* By clicking on your package, you can find more details, including instructions on how to pull the image. 
 
-  build:
+### Creating a docker-compose.yml file
 
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # Needed to increment version number, and tag.
-      packages: write
-      deployments: write
+### Logon to ghcr.io
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
-        token : ${{ secrets.PAT_TOKEN }}
-      
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Login to Github Packages
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN  }}
-      
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        platforms: linux/amd64
-        push: true
-```
-
-Save this file, and push it to the repository.
-
+### Run the docker-compose.yml
 
