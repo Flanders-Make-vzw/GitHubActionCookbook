@@ -2,7 +2,16 @@
 services:
 
   django-web:
-    image: ghcr.io/flanders-make-vzw/github-action-cookbook:latest
+    # image: ghcr.io/flanders-make-vzw/github-action-cookbook:latest
+
+    # Local build
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: wellficiency_data_platform:latest
+
+
+
     container_name: github-action-cookbook
     ports:
       - "8000:8000"

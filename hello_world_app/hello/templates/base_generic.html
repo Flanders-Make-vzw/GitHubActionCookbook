@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+<head>
+  <title>GitHub Actions Cookbook</title>
+</head>
+
+
+<header class="bar--nav">
+  <table>
+    <tr>
+      <td>
+        <img src="{% static 'css/FM_logo.png' %}" width="42px"> </img>
+      </td>
+      <td>
+        <h1>
+          <a href="/">GitHub Actions Cookbook</a>
+          </a>
+        </h1>
+      </td>
+
+    </tr>
+  </table>
+
+</header>
+
+<div class="container--centered">
+
+  <body>
+    {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+  </body>
+</div>
+
+
+</html>

@@ -7,15 +7,6 @@ RUN mkdir /hello_world_app
 # Set the working directory inside the container
 WORKDIR /hello_world_app
  
-# Set environment variables 
-# Prevents Python from writing pyc files to disk
-# ENV PYTHONDONTWRITEBYTECODE=1
-#Prevents Python from buffering stdout and stderr
-# ENV PYTHONUNBUFFERED=1 
- 
-# Upgrade pip
-# RUN pip install --upgrade pip 
- 
 # Copy the Django project  and install dependencies
 COPY requirements.txt  /hello_world_app/
  
