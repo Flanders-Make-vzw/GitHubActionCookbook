@@ -17,7 +17,7 @@ Note the following files and folders in the application:
 
 If you run this docker image, you should get the following page if you navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/): 
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 
 
@@ -96,20 +96,20 @@ The workflow contains mostly setup steps. The main processing is done in the doc
 * Click on the Actions tab
 * In the left sidebar, click the workflow you want to display:
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 
 Execute the workflow by clicking on ```Run workflow```:
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 Your workflow should appear in the list (it may take some time before it starts running). By clicking on the workflow, and then build, you should be able to see the different steps which are being executed:
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 You can get more detail of certain step by clicking on it: 
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ### Find the package
 
@@ -118,13 +118,70 @@ When everything has executed succesfully, you should have create a package which
 * Go back to the `code` tab of the repo.
 * On the right side, you can find the package section:
 
-![alt text](image-5.png)
+<p align="center">
+<img src="images/image-5.png" alt="drawing" width="200"/>
+</p>
 
 * By clicking on your package, you can find more details, including instructions on how to pull the image. 
 
 ### Creating a docker-compose.yml file
 
+To use the image you just created, you can specify it in a `docker-compose.yml` file.
+
+Create a `docker-compose.yml` file, and copy the following text into it:
+
+```
+services:
+
+  django-web:
+    image: ghcr.io/flanders-make-vzw/<Name Of Application Image>:latest
+
+    container_name: github-action-cookbook
+    ports:
+      - "8000:8000"
+
+```
+
+Make sure to replace \<Name Of Application Image> by the application name that you used.
+
+Note that the image is hosted on `ghcr.io`, which is the GitHub Container Reposity.
+
 ### Logon to ghcr.io
 
+Before you can pull the image, you will need to logon to ghcr.io/flanders-make-vzw. To do this, you need to create a Personal Access Token (PAT):
+
+* In GitHub, open the settings of your account, by clicking on the icon in the right top side, and clicking on `Settings`.
+* Click on `Developer Settings` in the left menu.
+* Open `Personal access tokens` and select `Tokens (classic)`.
+* Click on `Generate new token` and `Generate new token (classic)`.
+* Sign in to GitHub if requested.
+* Enter a note for the PAT, so that you can identify it later on.
+* Specify an expiration date. Make sure that this is well enough in the future. If you need to regenerate another token, you will need to copy it to all the locations where you used it.
+* Make sure to select `read:packages` from the list of scopes. If you plan on also adding extra functionalities to the workflow, it's best to also select `write:packages`.
+* Click on `Generate token` at the bottom of the page.
+
+If the token was generated succesfully, you will get a page that shows it. It starts with "ghp_". **Make sure to copy the token, and store it in a safe location, like your KeePass or another vault. You will not be able to retrieve it otherwise.**
+
+* Click on `Configure SSO` and authorize Flanders-Make-vzw.
+
+
+You can find more information about Personal Access Tokens here: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+
+
+When you have create a PAT, execute the following command:
+
+```docker login -u <GitHubUserId> -p <PatToken> ghcr.io/flanders-make-vzw```
+
+Replace \<GitHubUserId> by you GitHub UserId, and \<PatToken> by the PAT token you just created.
+
+You should get a message saying that you succesfully logged on to ghcr.io. 
+
+
 ### Run the docker-compose.yml
+
+Running the `docker-compose.yml` is done in the same way as for any `docker-compose.yml` file:
+
+* Go to the folder that contains you `docker-compose.yml` file.
+* Execute `docker compose up`.
+
 
