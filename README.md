@@ -187,6 +187,6 @@ Running the `docker-compose.yml` is done in the same way as for any `docker-comp
 
 # DevContainers
 
-Dockers can also be used to setup a development environment, so that we can ensure that it's easy to setup a new development environment, but also to ensure that everyone is using the same libraries. You can find more about DevContainers in [https://github.com/Flanders-Make-vzw/DevContainerCookbook](https://github.com/Flanders-Make-vzw/DevContainerCookbook).
+Dockers can also be used to setup a development environment, so that we can ensure that it's easy to setup a new development environment, but also to ensure that everyone is using the same environment and libraries. You can find more about DevContainers in [https://github.com/Flanders-Make-vzw/DevContainerCookbook](https://github.com/Flanders-Make-vzw/DevContainerCookbook).
 
 
